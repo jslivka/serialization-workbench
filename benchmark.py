@@ -81,12 +81,14 @@ if __name__ == '__main__':
     fmt = '{0:,}ns/pack {1:,}ns/unpack ({2:,} bytes)'
     ns = lambda d: d / TIMES * 10 ** 9
     for size in [0, 10, 100, 1000]:
-        print('array size: {0}'.format(size))
+        print('array size: {0}\n'.format(size))
 
         pack_duration, length = protobuf_pack(TIMES, size)
         unpack_duration = protobuf_unpack(TIMES, size)
         print('protobuf'),
         print(fmt.format(ns(pack_duration), ns(unpack_duration), length))
+
+        print()
 
         pack_duration, length = json_pack(TIMES, size)
         unpack_duration = json_unpack(TIMES, size)
@@ -98,6 +100,8 @@ if __name__ == '__main__':
         print('json with tuple'),
         print(fmt.format(ns(pack_duration), ns(unpack_duration), length))
 
+        print()
+
         pack_duration, length = msgpack_pack(TIMES, size)
         unpack_duration = msgpack_unpack(TIMES, size)
         print('msgpack with dict'),
@@ -107,3 +111,5 @@ if __name__ == '__main__':
         unpack_duration = msgpack_unpack(TIMES, size, make=make_tuple)
         print('msgpack with tuple'),
         print(fmt.format(ns(pack_duration), ns(unpack_duration), length))
+
+        print()
